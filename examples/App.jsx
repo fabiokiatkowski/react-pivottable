@@ -4,7 +4,7 @@ import {sortAs} from '../src/Utilities';
 import TableRenderers from '../src/TableRenderers';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from '../src/PlotlyRenderers';
-import PivotTableUI from '../src/PivotTableUI';
+import PivotTable from '../src/PivotTable';
 import '../src/pivottable.css';
 import Dropzone from 'react-dropzone'
 import Papa from 'papaparse'
@@ -23,7 +23,7 @@ class PivotTableUISmartWrapper extends React.PureComponent {
     }
 
     render() {
-        return <PivotTableUI
+        return <PivotTable
             renderers={Object.assign({}, TableRenderers, createPlotlyRenderers(Plot))}
             {...this.state.pivotState} onChange={s => this.setState({pivotState: s})}
             unusedOrientationCutoff={Infinity}
@@ -33,20 +33,22 @@ class PivotTableUISmartWrapper extends React.PureComponent {
 
 export default class App extends React.Component {
     componentWillMount() {
+        const obj = {
+            displayColumn: 'tamanho',
+            sortColumn: 'ordenacaoTamanho'
+        }
         this.setState({
             mode: "demo",
             filename: "Sample Dataset: Tips",
             pivotState: {
                 data: tips,
-                rows: ["Payer Gender"], cols: ["Party Size"],
-                aggregatorName: "Sum over Sum", vals: ["Tip", "Total Bill"],
-                rendererName: "Grouped Column Chart",
-                sorters: {
-                    "Meal": sortAs(["Lunch", "Dinner"]),
-                    "Day of Week": sortAs(["Thursday", "Friday", "Saturday", "Sunday"])},
-                plotlyOptions: {width: 900, height: 500}
-            }
-        });
+                rows: ["cor"], cols:[obj],
+                // cols: ["tamanho"],
+                aggregatorName: "Sum", vals: ["quantidade"],
+                rendererName: "Table",
+                colOrder:"sort_column_a_to_z",
+                sorters: { "ordenacaoTamanho": sortAs("ordenacaoTamanho") }
+        }});
     }
 
     onDrop(files) {

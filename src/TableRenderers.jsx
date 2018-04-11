@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {PivotData} from './Utilities';
 
 // helper function for setting row/col-span in pivotTableRenderer
-const spanSize = function(arr, i, j) {
+const spanSize = function(arr, i, j) {  
   let x;
   if (i !== 0) {
     let asc, end;
@@ -56,7 +56,7 @@ function makeRenderer(opts = {}) {
   class TableRenderer extends React.PureComponent {
     render() {
       const pivotData = new PivotData(this.props);
-      const colAttrs = pivotData.props.cols;
+      const colAttrs = pivotData.isArrayOfString(pivotData.props.cols) ? pivotData.props.cols : pivotData.props.cols.map(c => c.displayColumn)
       const rowAttrs = pivotData.props.rows;
       const rowKeys = pivotData.getRowKeys();
       const colKeys = pivotData.getColKeys();
