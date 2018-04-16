@@ -44,7 +44,7 @@ export default class App extends React.Component {
                 data: tips,
                 rows: ["cor"], cols:[obj],
                 // cols: ["tamanho"],
-                aggregatorName: "Sum", vals: ["quantidade"],
+                aggregatorName: "Integer Sum", vals: ["quantidade"],
                 rendererName: "Table",
                 colOrder:"sort_column_a_to_z",
                 sorters: { "ordenacaoTamanho": sortAs("ordenacaoTamanho") }
